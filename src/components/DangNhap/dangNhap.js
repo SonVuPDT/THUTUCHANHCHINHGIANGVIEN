@@ -21,7 +21,7 @@ export var token;
 export var maSinhVien;
 export var maGiangVien;
 
-function Login(navigation) {
+function DangNhap(navigation) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [isChecked, setChecked] = useState(false);
@@ -494,4 +494,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Login;
+export default DangNhap;

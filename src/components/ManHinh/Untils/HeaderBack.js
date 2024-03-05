@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
     height: 30,
     width: 24,
     tintColor: '#fff',
-    marginLeft: 60,
+    marginLeft: 10,
   },
   textTieuDe: {
     fontSize: 30,

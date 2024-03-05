@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   SafeAreaView,
   View,
@@ -10,6 +10,8 @@ import {
   TextInput,
   Alert,
   ScrollView,
+  Modal,
+  TouchableWithoutFeedback,
 } from 'react-native';
 
 const getWidth = Dimensions.get('window').width;
@@ -18,11 +20,262 @@ const getHeight = Dimensions.get('window').height;
 import Header from '../../../Untils/Header';
 import Footer from '../../../Untils/Footer';
 import ModalThongBao from '../../../Untils/ModalThongBao';
-import {Colors} from 'react-native/Libraries/NewAppScreen';
+import ModalDonViVaLinhVuc from '../../../Untils/ModalDonViVaLinhVuc';
 
-const TrangChu = () => {
+const dataThuTuc = [
+  {
+    tenThuTuc: 'QUY TRÌNH XIN NGHỈ THAI SẢN',
+    mucDo: '4',
+    tenYeuCau: 'Nộp hồ sơ',
+  },
+  {
+    tenThuTuc: 'QUY TRÌNH XIN NGHỈ CÔNG TÁC ',
+    mucDo: '5',
+    tenYeuCau: 'Nộp hồ sơ',
+  },
+  {
+    tenThuTuc: 'QUY TRÌNH XIN NGHỈ THAI SẢN',
+    mucDo: '4',
+    tenYeuCau: 'Nộp hồ sơ',
+  },
+  {
+    tenThuTuc: 'QUY TRÌNH XIN NGHỈ THAI SẢN',
+    mucDo: '4',
+    tenYeuCau: 'Nộp hồ sơ',
+  },
+  {
+    tenThuTuc: 'QUY TRÌNH XIN NGHỈ THAI SẢN',
+    mucDo: '4',
+    tenYeuCau: 'Nộp hồ sơ',
+  },
+  {
+    tenThuTuc: 'QUY TRÌNH XIN NGHỈ THAI SẢN',
+    mucDo: '4',
+    tenYeuCau: 'Nộp hồ sơ',
+  },
+  {
+    tenThuTuc: 'QUY TRÌNH XIN NGHỈ THAI SẢN',
+    mucDo: '4',
+    tenYeuCau: 'Nộp hồ sơ',
+  },
+  {
+    tenThuTuc: 'QUY TRÌNH XIN NGHỈ THAI SẢN',
+    mucDo: '4',
+    tenYeuCau: 'Nộp hồ sơ',
+  },
+  {
+    tenThuTuc: 'QUY TRÌNH XIN NGHỈ THAI SẢN',
+    mucDo: '4',
+    tenYeuCau: 'Nộp hồ sơ',
+  },
+  {
+    tenThuTuc: 'QUY TRÌNH XIN NGHỈ THAI SẢN',
+    mucDo: '4',
+    tenYeuCau: 'Nộp hồ sơ',
+  },
+  {
+    tenThuTuc: 'QUY TRÌNH XIN NGHỈ THAI SẢN',
+    mucDo: '4',
+    tenYeuCau: 'Nộp hồ sơ',
+  },
+  {
+    tenThuTuc: 'QUY TRÌNH XIN NGHỈ THAI SẢN',
+    mucDo: '4',
+    tenYeuCau: 'Nộp hồ sơ',
+  },
+  {
+    tenThuTuc: 'QUY TRÌNH XIN NGHỈ THAI SẢN',
+    mucDo: '4',
+    tenYeuCau: 'Nộp hồ sơ',
+  },
+  {
+    tenThuTuc: 'QUY TRÌNH XIN NGHỈ THAI SẢN',
+    mucDo: '4',
+    tenYeuCau: 'Nộp hồ sơ',
+  },
+  {
+    tenThuTuc: 'QUY TRÌNH XIN NGHỈ THAI SẢN',
+    mucDo: '4',
+    tenYeuCau: 'Nộp hồ sơ',
+  },
+  {
+    tenThuTuc: 'QUY TRÌNH XIN NGHỈ THAI SẢN',
+    mucDo: '4',
+    tenYeuCau: 'Nộp hồ sơ',
+  },
+  {
+    tenThuTuc: 'QUY TRÌNH XIN NGHỈ THAI SẢN',
+    mucDo: '4',
+    tenYeuCau: 'Nộp hồ sơ',
+  },
+  {
+    tenThuTuc: 'QUY TRÌNH XIN NGHỈ THAI SẢN',
+    mucDo: '4',
+    tenYeuCau: 'Nộp hồ sơ',
+  },
+  {
+    tenThuTuc: 'QUY TRÌNH XIN NGHỈ THAI SẢN',
+    mucDo: '4',
+    tenYeuCau: 'Nộp hồ sơ',
+  },
+  {
+    tenThuTuc: 'QUY TRÌNH XIN NGHỈ CÔNG TÁC',
+    mucDo: '4',
+    tenYeuCau: 'Nộp hồ sơ',
+  },
+  {
+    tenThuTuc: 'QUY TRÌNH XIN NGHỈ THAI SẢN',
+    mucDo: '4',
+    tenYeuCau: 'Nộp hồ sơ',
+  },
+  {
+    tenThuTuc: 'QUY TRÌNH XIN NGHỈ THAI SẢN',
+    mucDo: '4',
+    tenYeuCau: 'Nộp hồ sơ',
+  },
+  {
+    tenThuTuc: 'QUY TRÌNH XIN NGHỈ THAI SẢN',
+    mucDo: '4',
+    tenYeuCau: 'Nộp hồ sơ',
+  },
+  {
+    tenThuTuc: 'QUY TRÌNH XIN NGHỈ THAI SẢN',
+    mucDo: '4',
+    tenYeuCau: 'Nộp hồ sơ',
+  },
+  {
+    tenThuTuc: 'QUY TRÌNH XIN NGHỈ THAI SẢN',
+    mucDo: '4',
+    tenYeuCau: 'Nộp hồ sơ',
+  },
+  {
+    tenThuTuc: 'QUY TRÌNH XIN NGHỈ THAI SẢN',
+    mucDo: '4',
+    tenYeuCau: 'Nộp hồ sơ',
+  },
+  {
+    tenThuTuc: 'QUY TRÌNH XIN NGHỈ THAI SẢN',
+    mucDo: '4',
+    tenYeuCau: 'Nộp hồ sơ',
+  },
+  {
+    tenThuTuc: 'QUY TRÌNH XIN NGHỈ THAI SẢN',
+    mucDo: '4',
+    tenYeuCau: 'Nộp hồ sơ',
+  },
+  {
+    tenThuTuc: 'QUY TRÌNH XIN NGHỈ THAI SẢN',
+    mucDo: '4',
+    tenYeuCau: 'Nộp hồ sơ',
+  },
+  {
+    tenThuTuc: 'QUY TRÌNH XIN NGHỈ THAI SẢN',
+    mucDo: '4',
+    tenYeuCau: 'Nộp hồ sơ',
+  },
+  {
+    tenThuTuc: 'QUY TRÌNH XIN NGHỈ THAI SẢN',
+    mucDo: '4',
+    tenYeuCau: 'Nộp hồ sơ',
+  },
+  {
+    tenThuTuc: 'QUY TRÌNH XIN NGHỈ THAI SẢN',
+    mucDo: '4',
+    tenYeuCau: 'Nộp hồ sơ',
+  },
+  {
+    tenThuTuc: 'QUY TRÌNH XIN NGHỈ THAI SẢN',
+    mucDo: '4',
+    tenYeuCau: 'Nộp hồ sơ',
+  },
+  {
+    tenThuTuc: 'QUY TRÌNH XIN NGHỈ THAI SẢN',
+    mucDo: '4',
+    tenYeuCau: 'Nộp hồ sơ',
+  },
+  {
+    tenThuTuc: 'QUY TRÌNH XIN NGHỈ THAI SẢN',
+    mucDo: '4',
+    tenYeuCau: 'Nộp hồ sơ',
+  },
+  {
+    tenThuTuc: 'QUY TRÌNH XIN NGHỈ THAI SẢN',
+    mucDo: '4',
+    tenYeuCau: 'Nộp hồ sơ',
+  },
+  {
+    tenThuTuc: 'QUY TRÌNH XIN NGHỈ THAI SẢN',
+    mucDo: '4',
+    tenYeuCau: 'Nộp hồ sơ',
+  },
+  {
+    tenThuTuc: 'QUY TRÌNH XIN NGHỈ THAI SẢN',
+    mucDo: '4',
+    tenYeuCau: 'Nộp hồ sơ',
+  },
+  {
+    tenThuTuc: 'QUY TRÌNH XIN NGHỈ THAI SẢN',
+    mucDo: '4',
+    tenYeuCau: 'Nộp hồ sơ',
+  },
+  {
+    tenThuTuc: 'QUY TRÌNH XIN NGHỈ THAI SẢN',
+    mucDo: '4',
+    tenYeuCau: 'Nộp hồ sơ',
+  },
+  {
+    tenThuTuc: 'QUY TRÌNH XIN NGHỈ THAI SẢN',
+    mucDo: '4',
+    tenYeuCau: 'Nộp hồ sơ',
+  },
+  {
+    tenThuTuc: 'QUY TRÌNH XIN NGHỈ THAI SẢN',
+    mucDo: '4',
+    tenYeuCau: 'Nộp hồ sơ',
+  },
+  {
+    tenThuTuc: 'QUY TRÌNH XIN NGHỈ THAI SẢN',
+    mucDo: '4',
+    tenYeuCau: 'Nộp hồ sơ',
+  },
+  {
+    tenThuTuc: 'QUY TRÌNH XIN NGHỈ THAI SẢN',
+    mucDo: '4',
+    tenYeuCau: 'Nộp hồ sơ',
+  },
+];
+const TrangChu = navigation => {
   const [thongTinTimKiem, setThongTinTimKiem] = useState('');
   const [showModal, setShowModal] = useState(false);
+  const [getTenDonVi, setTenDonVi] = useState('');
+  const [modalDVLV, setModalDVLV] = useState(false);
+  const [showOverlay, setShowOverlay] = useState(false);
+
+  const [viTri, setViTri] = useState(0);
+  const soLuongBanGhiHienThi = 10;
+  const duLieuHienTai = dataThuTuc.slice(viTri, viTri + soLuongBanGhiHienThi);
+
+  const handleNextPage = () => {
+    if (viTri + soLuongBanGhiHienThi < dataThuTuc.length) {
+      setViTri(viTri + soLuongBanGhiHienThi);
+    }
+  };
+
+  const handlePrePage = () => {
+    if (viTri - soLuongBanGhiHienThi >= 0) {
+      setViTri(viTri - soLuongBanGhiHienThi);
+    }
+  };
+
+  const handlePrePrePage = () => {
+    setViTri(0);
+  };
+
+  const handleNextNextPage = () => {
+    const tongSoTrang = Math.ceil(dataThuTuc.length / soLuongBanGhiHienThi);
+    const trangCuoiCung = (tongSoTrang - 1) * soLuongBanGhiHienThi;
+    setViTri(trangCuoiCung);
+  };
 
   const openModal = () => {
     setShowModal(true);
@@ -30,9 +283,88 @@ const TrangChu = () => {
   const closeModal = () => {
     setShowModal(false);
   };
+
+  const openModalDVLV = () => {
+    setModalDVLV(true);
+  };
+
+  const closeModalDVLV = () => {
+    setModalDVLV(false);
+  };
+
+  const handleMenuPress = () => {
+    setShowOverlay(!showOverlay);
+  };
+
+  useEffect(() => {}, [getTenDonVi]);
+
   return (
     <SafeAreaView style={styles.container}>
-      <Header title="THỦ TỤC HÀNH CHÍNH" onPress={() => {}} />
+      <Header title="THỦ TỤC HÀNH CHÍNH" onPress={handleMenuPress} />
+
+      {showOverlay && (
+        <Modal transparent={true} animationType="slide">
+          <TouchableWithoutFeedback onPress={handleMenuPress}>
+            <View style={{flex: 1, backgroundColor: 'rgba(0, 0, 0, 0.5)'}}>
+              <View style={[styles.viewDrawer]}>
+                <View style={{marginTop: 90}}>
+                  <TouchableOpacity onPress={handleMenuPress}>
+                    <Image
+                      source={require('../../../../../images/menu.png')}
+                      style={styles.iconMenu}
+                    />
+                  </TouchableOpacity>
+
+                  <View style={[styles.drawerText, {marginTop: 20}]}>
+                    <TouchableOpacity onPress={() => {}}>
+                      <View style={styles.viewTouchableOpacity}>
+                        <Image
+                          source={require('../../../../../images/person.png')}
+                          style={styles.iconDrawer}
+                          tintColor={'#ffffff'}
+                        />
+                        <Text style={styles.textTouchableOpacity}>
+                          Trang cá nhân
+                        </Text>
+                      </View>
+                    </TouchableOpacity>
+                  </View>
+
+                  <View style={styles.drawerText}>
+                    <TouchableOpacity>
+                      <View style={styles.viewTouchableOpacity}>
+                        <Image
+                          source={require('../../../../../images/youtube.png')}
+                          style={styles.iconDrawer}
+                          tintColor={'#ffffff'}
+                        />
+                        <Text style={styles.textTouchableOpacity}>
+                          Hướng dẫn sử dụng
+                        </Text>
+                      </View>
+                    </TouchableOpacity>
+                  </View>
+
+                  <View style={styles.drawerText}>
+                    <TouchableOpacity>
+                      <View style={styles.viewTouchableOpacity}>
+                        <Image
+                          source={require('../../../../../images/logout.png')}
+                          style={styles.iconDrawer}
+                          tintColor={'#ffffff'}
+                        />
+                        <Text style={styles.textTouchableOpacity}>
+                          Đăng xuất
+                        </Text>
+                      </View>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              </View>
+            </View>
+          </TouchableWithoutFeedback>
+        </Modal>
+      )}
 
       <ModalThongBao
         visible={showModal}
@@ -40,14 +372,40 @@ const TrangChu = () => {
         message="Chưa hoàn thành!"
       />
 
+      <ModalDonViVaLinhVuc
+        visible={modalDVLV}
+        onClose={closeModalDVLV}
+        getTenDonVi={getTenDonVi}
+        setTenDonVi={setTenDonVi}
+      />
+
       <View style={styles.body}>
-        <TouchableOpacity style={styles.openMenu} onPress={openModal}>
-          <Image
-            source={require('../../../../../images/right-arrow.png')}
-            tintColor={'#ffff'}
-            style={styles.iconOpenMenu}
-          />
-        </TouchableOpacity>
+        {getTenDonVi === '' ? (
+          <TouchableOpacity
+            style={[styles.openMenu, {width: 53}]}
+            onPress={openModalDVLV}>
+            <Image
+              source={require('../../../../../images/right-arrow.png')}
+              tintColor={'#ffff'}
+              style={styles.iconOpenMenu}
+            />
+          </TouchableOpacity>
+        ) : (
+          <View style={{flex: 0.8, alignItems: 'center'}}>
+            <TouchableOpacity
+              style={[styles.openMenu, {position: 'absolute', left: 0}]}
+              onPress={openModalDVLV}>
+              <Text style={{color: '#ffffff', fontSize: 16, marginLeft: 20}}>
+                {getTenDonVi}
+              </Text>
+              <Image
+                source={require('../../../../../images/right-arrow.png')}
+                tintColor={'#ffff'}
+                style={[styles.iconOpenMenu, {marginLeft: 10, marginRight: 20}]}
+              />
+            </TouchableOpacity>
+          </View>
+        )}
 
         <View style={styles.marginBody}>
           {/* Tìm kiếm */}
@@ -120,229 +478,40 @@ const TrangChu = () => {
 
             {/* Chi tiết danh sách tên thủ tục */}
             <View style={styles.viewData}>
-              <View style={styles.chiTietDanhSachThuTuc}>
-                <View style={styles.chiTietViewSTT}>
-                  <Text style={[styles.text, {color: 'black'}]}>1</Text>
-                </View>
-
-                {/* chi tiết danh sách thủ tục */}
-                <View style={styles.chiTietViewTenThuTuc}>
-                  <Text style={[styles.text2, {fontWeight: 'bold'}]}>
-                    QUY TRÌNH XIN NGHỈ THAI SẢN
-                  </Text>
-
-                  <View style={styles.chiTietViewTenThuTucMucDo}>
-                    <Text style={[styles.text2, {marginTop: 2}]}>Mức độ:</Text>
-                    <View style={styles.viewMucDo}>
-                      <Text style={[styles.text1, {color: '#ffffff'}]}>4</Text>
-                    </View>
+              {duLieuHienTai.map((tt, index) => (
+                <View style={styles.chiTietDanhSachThuTuc} key={index}>
+                  <View style={styles.chiTietViewSTT}>
+                    <Text style={[styles.text, {color: 'black'}]}>
+                      {index + 1 + viTri}
+                    </Text>
                   </View>
 
-                  <Text style={[styles.text2, {color: 'red', marginTop: 2}]}>
-                    Nộp hồ sơ
-                  </Text>
-                </View>
+                  <View style={styles.chiTietViewTenThuTuc}>
+                    <Text style={[styles.text2, {fontWeight: 'bold'}]}>
+                      {tt.tenThuTuc}
+                    </Text>
 
-                <View style={styles.chiTietViewLinhVuc}>
-                  <Text style={[styles.text1, {color: 'black'}]}>TCCB</Text>
-                </View>
-              </View>
-
-              <View style={styles.chiTietDanhSachThuTuc}>
-                <View style={styles.chiTietViewSTT}>
-                  <Text style={[styles.text, {color: 'black'}]}>1</Text>
-                </View>
-
-                {/* chi tiết danh sách thủ tục */}
-                <View style={styles.chiTietViewTenThuTuc}>
-                  <Text style={[styles.text2, {fontWeight: 'bold'}]}>
-                    QUY TRÌNH XIN NGHỈ THAI SẢN
-                  </Text>
-
-                  <View style={styles.chiTietViewTenThuTucMucDo}>
-                    <Text style={[styles.text2, {marginTop: 2}]}>Mức độ:</Text>
-                    <View style={styles.viewMucDo}>
-                      <Text style={[styles.text1, {color: '#ffffff'}]}>4</Text>
+                    <View style={styles.chiTietViewTenThuTucMucDo}>
+                      <Text style={[styles.text2, {marginTop: 2}]}>
+                        Mức độ:
+                      </Text>
+                      <View style={styles.viewMucDo}>
+                        <Text style={[styles.text1, {color: '#ffffff'}]}>
+                          {tt.mucDo}
+                        </Text>
+                      </View>
                     </View>
+
+                    <Text style={[styles.text2, {color: 'red', marginTop: 2}]}>
+                      {tt.tenYeuCau}
+                    </Text>
                   </View>
 
-                  <Text style={[styles.text2, {color: 'red', marginTop: 2}]}>
-                    Nộp hồ sơ
-                  </Text>
-                </View>
-
-                <View style={styles.chiTietViewLinhVuc}>
-                  <Text style={[styles.text1, {color: 'black'}]}>TCCB</Text>
-                </View>
-              </View>
-
-              <View style={styles.chiTietDanhSachThuTuc}>
-                <View style={styles.chiTietViewSTT}>
-                  <Text style={[styles.text, {color: 'black'}]}>1</Text>
-                </View>
-
-                {/* chi tiết danh sách thủ tục */}
-                <View style={styles.chiTietViewTenThuTuc}>
-                  <Text style={[styles.text2, {fontWeight: 'bold'}]}>
-                    QUY TRÌNH XIN NGHỈ THAI SẢN
-                  </Text>
-
-                  <View style={styles.chiTietViewTenThuTucMucDo}>
-                    <Text style={[styles.text2, {marginTop: 2}]}>Mức độ:</Text>
-                    <View style={styles.viewMucDo}>
-                      <Text style={[styles.text1, {color: '#ffffff'}]}>4</Text>
-                    </View>
+                  <View style={styles.chiTietViewLinhVuc}>
+                    <Text style={[styles.text1, {color: 'black'}]}>TCCB</Text>
                   </View>
-
-                  <Text style={[styles.text2, {color: 'red', marginTop: 2}]}>
-                    Nộp hồ sơ
-                  </Text>
                 </View>
-
-                <View style={styles.chiTietViewLinhVuc}>
-                  <Text style={[styles.text1, {color: 'black'}]}>TCCB</Text>
-                </View>
-              </View>
-
-              <View style={styles.chiTietDanhSachThuTuc}>
-                <View style={styles.chiTietViewSTT}>
-                  <Text style={[styles.text, {color: 'black'}]}>1</Text>
-                </View>
-
-                {/* chi tiết danh sách thủ tục */}
-                <View style={styles.chiTietViewTenThuTuc}>
-                  <Text style={[styles.text2, {fontWeight: 'bold'}]}>
-                    QUY TRÌNH XIN NGHỈ THAI SẢN
-                  </Text>
-
-                  <View style={styles.chiTietViewTenThuTucMucDo}>
-                    <Text style={[styles.text2, {marginTop: 2}]}>Mức độ:</Text>
-                    <View style={styles.viewMucDo}>
-                      <Text style={[styles.text1, {color: '#ffffff'}]}>4</Text>
-                    </View>
-                  </View>
-
-                  <Text style={[styles.text2, {color: 'red', marginTop: 2}]}>
-                    Nộp hồ sơ
-                  </Text>
-                </View>
-
-                <View style={styles.chiTietViewLinhVuc}>
-                  <Text style={[styles.text1, {color: 'black'}]}>TCCB</Text>
-                </View>
-              </View>
-
-              <View style={styles.chiTietDanhSachThuTuc}>
-                <View style={styles.chiTietViewSTT}>
-                  <Text style={[styles.text, {color: 'black'}]}>1</Text>
-                </View>
-
-                {/* chi tiết danh sách thủ tục */}
-                <View style={styles.chiTietViewTenThuTuc}>
-                  <Text style={[styles.text2, {fontWeight: 'bold'}]}>
-                    QUY TRÌNH XIN NGHỈ THAI SẢN
-                  </Text>
-
-                  <View style={styles.chiTietViewTenThuTucMucDo}>
-                    <Text style={[styles.text2, {marginTop: 2}]}>Mức độ:</Text>
-                    <View style={styles.viewMucDo}>
-                      <Text style={[styles.text1, {color: '#ffffff'}]}>4</Text>
-                    </View>
-                  </View>
-
-                  <Text style={[styles.text2, {color: 'red', marginTop: 2}]}>
-                    Nộp hồ sơ
-                  </Text>
-                </View>
-
-                <View style={styles.chiTietViewLinhVuc}>
-                  <Text style={[styles.text1, {color: 'black'}]}>TCCB</Text>
-                </View>
-              </View>
-
-              <View style={styles.chiTietDanhSachThuTuc}>
-                <View style={styles.chiTietViewSTT}>
-                  <Text style={[styles.text, {color: 'black'}]}>1</Text>
-                </View>
-
-                {/* chi tiết danh sách thủ tục */}
-                <View style={styles.chiTietViewTenThuTuc}>
-                  <Text style={[styles.text2, {fontWeight: 'bold'}]}>
-                    QUY TRÌNH XIN NGHỈ THAI SẢN
-                  </Text>
-
-                  <View style={styles.chiTietViewTenThuTucMucDo}>
-                    <Text style={[styles.text2, {marginTop: 2}]}>Mức độ:</Text>
-                    <View style={styles.viewMucDo}>
-                      <Text style={[styles.text1, {color: '#ffffff'}]}>4</Text>
-                    </View>
-                  </View>
-
-                  <Text style={[styles.text2, {color: 'red', marginTop: 2}]}>
-                    Nộp hồ sơ
-                  </Text>
-                </View>
-
-                <View style={styles.chiTietViewLinhVuc}>
-                  <Text style={[styles.text1, {color: 'black'}]}>TCCB</Text>
-                </View>
-              </View>
-
-              <View style={styles.chiTietDanhSachThuTuc}>
-                <View style={styles.chiTietViewSTT}>
-                  <Text style={[styles.text, {color: 'black'}]}>1</Text>
-                </View>
-
-                {/* chi tiết danh sách thủ tục */}
-                <View style={styles.chiTietViewTenThuTuc}>
-                  <Text style={[styles.text2, {fontWeight: 'bold'}]}>
-                    QUY TRÌNH XIN NGHỈ THAI SẢN
-                  </Text>
-
-                  <View style={styles.chiTietViewTenThuTucMucDo}>
-                    <Text style={[styles.text2, {marginTop: 2}]}>Mức độ:</Text>
-                    <View style={styles.viewMucDo}>
-                      <Text style={[styles.text1, {color: '#ffffff'}]}>4</Text>
-                    </View>
-                  </View>
-
-                  <Text style={[styles.text2, {color: 'red', marginTop: 2}]}>
-                    Nộp hồ sơ
-                  </Text>
-                </View>
-
-                <View style={styles.chiTietViewLinhVuc}>
-                  <Text style={[styles.text1, {color: 'black'}]}>TCCB</Text>
-                </View>
-              </View>
-
-              <View style={styles.chiTietDanhSachThuTuc}>
-                <View style={styles.chiTietViewSTT}>
-                  <Text style={[styles.text, {color: 'black'}]}>1</Text>
-                </View>
-
-                {/* chi tiết danh sách thủ tục */}
-                <View style={styles.chiTietViewTenThuTuc}>
-                  <Text style={[styles.text2, {fontWeight: 'bold'}]}>
-                    QUY TRÌNH XIN NGHỈ THAI SẢN
-                  </Text>
-
-                  <View style={styles.chiTietViewTenThuTucMucDo}>
-                    <Text style={[styles.text2, {marginTop: 2}]}>Mức độ:</Text>
-                    <View style={styles.viewMucDo}>
-                      <Text style={[styles.text1, {color: '#ffffff'}]}>4</Text>
-                    </View>
-                  </View>
-
-                  <Text style={[styles.text2, {color: 'red', marginTop: 2}]}>
-                    Nộp hồ sơ
-                  </Text>
-                </View>
-
-                <View style={styles.chiTietViewLinhVuc}>
-                  <Text style={[styles.text1, {color: 'black'}]}>TCCB</Text>
-                </View>
-              </View>
+              ))}
             </View>
           </ScrollView>
 
@@ -350,7 +519,7 @@ const TrangChu = () => {
             <View style={styles.viewPreNext}>
               <TouchableOpacity
                 onPress={() => {
-                  openModal();
+                  handlePrePrePage();
                 }}>
                 <View style={styles.viewButtonNext}>
                   <Image
@@ -361,10 +530,7 @@ const TrangChu = () => {
                 </View>
               </TouchableOpacity>
 
-              <TouchableOpacity
-                onPress={() => {
-                  openModal();
-                }}>
+              <TouchableOpacity onPress={handlePrePage}>
                 <View style={[styles.viewButtonNext, {marginLeft: 6}]}>
                   <Image
                     source={require('../../../../../images/backk.png')}
@@ -381,10 +547,7 @@ const TrangChu = () => {
                   flexDirection: 'row',
                   height: 31,
                 }}>
-                <TouchableOpacity
-                  onPress={() => {
-                    openModal();
-                  }}>
+                <TouchableOpacity onPress={handleNextPage}>
                   <View
                     style={[
                       styles.viewButtonNext,
@@ -400,7 +563,7 @@ const TrangChu = () => {
 
                 <TouchableOpacity
                   onPress={() => {
-                    openModal();
+                    handleNextNextPage();
                   }}>
                   <View
                     style={[
@@ -445,7 +608,6 @@ const styles = StyleSheet.create({
   },
 
   openMenu: {
-    width: 53,
     height: 33,
     backgroundColor: '#245d7c',
     marginTop: 15,
@@ -453,6 +615,7 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 30,
     justifyContent: 'center',
     alignItems: 'center',
+    flexDirection: 'row',
   },
 
   iconOpenMenu: {
@@ -505,16 +668,16 @@ const styles = StyleSheet.create({
 
   text: {
     color: '#ffffff',
-    fontSize: 17,
+    fontSize: 16,
     fontWeight: 'bold',
   },
 
   text1: {
-    fontSize: 17,
+    fontSize: 16,
   },
 
   text2: {
-    fontSize: 17,
+    fontSize: 16,
     marginLeft: 10,
     color: 'black',
   },
@@ -547,12 +710,18 @@ const styles = StyleSheet.create({
   },
 
   chiTietDanhSachThuTuc: {
+    backgroundColor: '#ffffff',
     flexDirection: 'row',
     height: 80,
     borderWidth: 0.5,
     marginBottom: 15,
     borderRadius: 8,
     borderColor: 'gray',
+    shadowColor: 'gray',
+    shadowOpacity: 0.4,
+    shadowRadius: 4,
+    shadowOffset: {width: 0, height: 2},
+    elevation: 6,
   },
 
   chiTietViewSTT: {
@@ -622,8 +791,42 @@ const styles = StyleSheet.create({
   },
 
   iconButtonNext: {
-    height: 15,
-    width: 15,
+    height: 19,
+    width: 19,
+  },
+
+  viewDrawer: {
+    width: (2 * getWidth) / 3,
+    height: getHeight,
+    backgroundColor: '#245d7c',
+  },
+
+  iconMenu: {
+    height: 30,
+    width: 25,
+    tintColor: '#fff',
+    marginLeft: 15,
+  },
+
+  drawerText: {
+    marginLeft: 40,
+    marginTop: 20,
+  },
+
+  viewTouchableOpacity: {
+    flexDirection: 'row',
+  },
+
+  iconDrawer: {
+    width: 28,
+    height: 28,
+  },
+
+  textTouchableOpacity: {
+    color: '#ffffff',
+    fontSize: 23,
+    marginLeft: 15,
+    fontWeight: 'bold',
   },
 });
 export default TrangChu;

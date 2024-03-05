@@ -1,10 +1,5 @@
-import React, {useRef, useState} from 'react';
-import {
-  View,
-  TouchableOpacity,
-  Image,
-  Dimensions,
-} from 'react-native';
+import React, {useState} from 'react';
+import {View, TouchableOpacity, Image, Dimensions} from 'react-native';
 
 const getWidth = Dimensions.get('window').width;
 const getHeight = Dimensions.get('window').height;
@@ -61,7 +56,7 @@ function Footer(navigation) {
               alignItems: 'center',
             }}
             onPress={() => {
-              openModal();
+              navigation.navigate('TrangCaNhan');
             }}>
             <Image
               resizeMode="stretch"
