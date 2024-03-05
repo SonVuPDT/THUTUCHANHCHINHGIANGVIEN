@@ -7,7 +7,9 @@ import ChiTetHoSo from './TiepNhan/ChiTietHoSo/ChiTietHoSo';
 import TheoDoiDeNghi from './TiepNhan/TheoDoiDeNghi/TheoDoiDeNghi';
 import TrangCaNhan from '../Untils/TrangCaNhan';
 import TrangThongBao from '../Untils/TrangThongBao';
-import chitietthutuc from './TiepNhan/ChiTietThuTuc/ChiTietThuTuc';
+import Chitietthutuc from './TiepNhan/ChiTietThuTuc/ChiTietThuTuc';
+import Soanhoso from './TiepNhan/SoanHoSo/soanhoso';
+import Footer from '../Untils/Footer';
 
 const Stack = createNativeStackNavigator();
 const Index = () => {
@@ -22,7 +24,11 @@ const Index = () => {
         <Stack.Screen name="TheoDoiDeNghi" component={TheoDoiDeNghi} />
         <Stack.Screen name="TrangCaNhan" component={TrangCaNhan} />
         <Stack.Screen name="TrangThongBao" component={TrangThongBao} />
-        <Stack.Screen name="ChiTietThuTuc" component={chitietthutuc} />
+        <Stack.Screen name="ChiTietThuTuc" component={Chitietthutuc} />
+        <Stack.Screen name="SoanHoSo" component={Soanhoso} />
+        <Stack.Screen name="Footer" component={Footer} />
+
+
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -1,11 +1,12 @@
 import React, {useState} from 'react';
 import {View, TouchableOpacity, Image, Dimensions} from 'react-native';
-
+import { useNavigation } from '@react-navigation/native';
 const getWidth = Dimensions.get('window').width;
 const getHeight = Dimensions.get('window').height;
 import ModalThongBao from './ModalThongBao';
 
-function Footer(navigation) {
+const Footer=()=> {
+  const navigation = useNavigation();
   const [showModal, setShowModal] = useState(false);
 
   const openModal = () => {
@@ -14,19 +15,19 @@ function Footer(navigation) {
   const closeModal = () => {
     setShowModal(false);
   };
+  
   return (
-    <View>
-      <ModalThongBao
-        visible={showModal}
-        onClose={closeModal}
-        message="Chưa hoàn thành!"
-      />
       <View
         style={{
-          height: 0.08 * getHeight,
+          height: 0.1 * getHeight,
           backgroundColor: '#ffffff',
           width: getWidth,
         }}>
+          {/* <ModalThongBao
+        visible={showModal}
+        onClose={closeModal}
+        message="Chưa hoàn thành!"
+      /> */}
         <View
           style={{
             position: 'absolute',
@@ -56,7 +57,7 @@ function Footer(navigation) {
               alignItems: 'center',
             }}
             onPress={() => {
-              navigation.navigate('TrangCaNhan');
+              navigation.navigate('TrangCaNhan')
             }}>
             <Image
               resizeMode="stretch"
@@ -100,7 +101,7 @@ function Footer(navigation) {
           </TouchableOpacity>
         </View>
       </View>
-    </View>
+   
   );
 }
 export default Footer;

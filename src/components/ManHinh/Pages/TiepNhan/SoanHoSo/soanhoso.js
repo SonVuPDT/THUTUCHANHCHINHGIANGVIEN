@@ -5,12 +5,12 @@ import Footer from '../../../Untils/Footer';
 import HeaderBack from '../../../Untils/HeaderBack';
 const getWidth = Dimensions.get('window').width;
 const getHeight = Dimensions.get('window').height;
-const soanhoso=()=>{
+const Soanhoso=(props)=>{
     return <SafeAreaView style={styles.container}>
          <HeaderBack
               title="SOẠN HỒ SƠ"
               onPress={() => {
-                navigation.goBack();
+                props.navigation.goBack();
               }}
             />
             <View style={styles.body}>
@@ -308,7 +308,7 @@ const soanhoso=()=>{
             <Footer/>
     </SafeAreaView>
 }
-export default soanhoso
+export default Soanhoso
 const styles = StyleSheet.create({
     container: {
       backgroundColor: '#ffffff',

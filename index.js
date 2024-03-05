@@ -8,4 +8,4 @@ import Index from './src/components/ManHinh/Pages/index.js';
 import chitietthutuc from './src/components/ManHinh/Pages/TiepNhan/ChiTietThuTuc/ChiTietThuTuc.js';
 import soanhoso from './src/components/ManHinh/Pages/TiepNhan/SoanHoSo/soanhoso.js';
 
-AppRegistry.registerComponent(appName, () => soanhoso);
+AppRegistry.registerComponent(appName, () => Index);

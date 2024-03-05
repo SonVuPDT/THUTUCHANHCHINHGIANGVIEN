@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, TouchableOpacity} from 'react-native';
 
-const TrangCaNhan = () => {
+const TrangCaNhan = (props) => {
   return (
     <View
       style={{
@@ -13,6 +13,11 @@ const TrangCaNhan = () => {
       <Text style={{fontSize: 25, fontWeight: 'bold', color: 'black'}}>
         Trang cá nhân
       </Text>
+      <TouchableOpacity onPress={()=>{
+        props.navigation.goBack();
+      }}>
+        <Text>Quay lại</Text>
+      </TouchableOpacity>
     </View>
   );
 };

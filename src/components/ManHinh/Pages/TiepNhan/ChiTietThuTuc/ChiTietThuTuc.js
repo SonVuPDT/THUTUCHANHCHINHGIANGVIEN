@@ -16,7 +16,7 @@ import HeaderBack from '../../../Untils/HeaderBack';
 import Footer from '../../../Untils/Footer';
 const getWidth = Dimensions.get('window').width;
 const getHeight = Dimensions.get('window').height;
-const chitietthutuc = () => {
+const Chitietthutuc = (props) => {
   const [isChecked, setChecked] = useState(false);
   const [isChecked1, setChecked1] = useState(false);
   const [isChecked2, setChecked2] = useState(false);
@@ -29,7 +29,7 @@ const chitietthutuc = () => {
       <HeaderBack
         title="CHI TIẾT THỦ TỤC"
         onPress={() => {
-          navigation.goBack();
+          props.navigation.goBack();
         }}
       />
       <View style={styles.body}>
@@ -685,7 +685,7 @@ const chitietthutuc = () => {
         <View style={[styles.buttonHuy, {marginRight: 30}]}>
           <TouchableOpacity
             style={[styles.touchableOpacity, {backgroundColor: '#245d7c'}]}
-            onPress={() => {}}>
+            onPress={() => {props.navigation.navigate('SoanHoSo')}}>
             <Text style={{color: '#ffffff', fontSize: 19}}>Soạn hồ sơ</Text>
           </TouchableOpacity>
         </View>
@@ -694,7 +694,7 @@ const chitietthutuc = () => {
     </SafeAreaView>
   );
 };
-export default chitietthutuc;
+export default Chitietthutuc;
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#ffffff',
